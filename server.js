@@ -3,10 +3,12 @@ const EVENT_DATA =  'data';
 const SERVER = 'tyler/8415'
 const net = require('net');
 const fs = require('fs');
-const four_O_Four = require('./html_files/404.js');
+const notFound_error = require('./html_files/404.js');
 const helium = require('./html_files/helium.js');
 const hydrogen = require('./html_files/hydrogen.js');
 const index = require('./html_files/index.js');
+const styles = require('./html_files/styles.js');
+
 
 
 let server = net.createServer((socket) => {
@@ -17,6 +19,7 @@ let server = net.createServer((socket) => {
   socket.on(EVENT_DATA, (data) => {
     let reqHeaderArr = data.toString().split(' ');
     let date = new Date();
+    console.log(reqHeaderArr);
     for(var i = 0; i < reqHeaderArr.length; i++) {
       if(reqHeaderArr[i] === 'GET' && reqHeaderArr[i + 1] === '/' || reqHeaderArr[i + 1] === '/index.html') {
 
@@ -51,14 +54,24 @@ let server = net.createServer((socket) => {
                         Connection: keep-alive\n\n`);
           socket.write(hydrogen);
           return socket.end();
+      } else if(reqHeaderArr[i] === 'GET' && reqHeaderArr[i + 1] === '/css/styles.css') {
+        process.stdout.write(data);
+          socket.write(`HTTP/1.1 200 OK
+                        Server: ${SERVER}
+                        Date: ${date}
+                        Content-Type: text/css; charset=utf-8
+                        Content-Length: ${styles.length}
+                        Connection: keep-alive\n\n`);
+          socket.write(styles);
+          return socket.end();
       } else {
          socket.write(`HTTP/1.1 404 OK
                         Server: ${SERVER}
                         Date: ${date}
                         Content-Type: text/html; charset=utf-8
-                        Content-Length: ${four_O_Four.length}
+                        Content-Length: ${notFound_error.length}
                         Connection: keep-alive\n\n`);
-        socket.write(four_O_Four);
+        socket.write(notFound_error);
         return socket.end();
       }
     }
@@ -83,11 +96,3 @@ server.listen(PORT, () => {
 
 
 
-// socket.write(`HTTP/1.1 404
-//                       Server: ${SERVER}
-//                       Date: ${date}
-//                       Content-Type: text/html; charset=utf-8
-//                       Content-Length: ${four_O_Four.length}
-//                       Connection: keep-alive\n\n`)
-//         socket.write(four_O_Four);
-//         socket.end();
