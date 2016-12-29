@@ -1,3 +1,5 @@
+module.exports = `
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,3 +16,5 @@
 </body>
 </html>
 Raw
+
+`;

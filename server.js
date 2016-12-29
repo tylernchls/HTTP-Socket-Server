@@ -1,13 +1,12 @@
-const net = require('net');
-const fs = require('fs');
 const PORT = 8080;
 const EVENT_DATA =  'data';
 const SERVER = 'tyler/8415'
-const index = require('./index.js');
-
-
-
-
+const net = require('net');
+const fs = require('fs');
+const four_O_Four = require('./html_files/404.js');
+const helium = require('./html_files/helium.js');
+const hydrogen = require('./html_files/hydrogen.js');
+const index = require('./html_files/index.js');
 
 
 let server = net.createServer((socket) => {
@@ -17,11 +16,11 @@ let server = net.createServer((socket) => {
 
   socket.on(EVENT_DATA, (data) => {
     let reqHeaderArr = data.toString().split(' ');
+    let date = new Date();
     for(var i = 0; i < reqHeaderArr.length; i++) {
       if(reqHeaderArr[i] === 'GET' && reqHeaderArr[i + 1] === '/' || reqHeaderArr[i + 1] === '/index.html') {
 
 
-          let date = new Date();
           process.stdout.write(data);
           socket.write(`HTTP/1.1 200 OK
                         Server: ${SERVER}
@@ -30,16 +29,46 @@ let server = net.createServer((socket) => {
                         Content-Length: ${index.length}
                         Connection: keep-alive\n\n`);
           socket.write(index);
-          socket.end();
+          return socket.end();
 
-
-
+      } else if(reqHeaderArr[i] === 'GET' && reqHeaderArr[i + 1] === '/' || reqHeaderArr[i + 1] === '/helium.html') {
+        process.stdout.write(data);
+          socket.write(`HTTP/1.1 200 OK
+                        Server: ${SERVER}
+                        Date: ${date}
+                        Content-Type: text/html; charset=utf-8
+                        Content-Length: ${helium.length}
+                        Connection: keep-alive\n\n`);
+          socket.write(helium);
+          return socket.end();
+      } else if(reqHeaderArr[i] === 'GET' && reqHeaderArr[i + 1] === '/' || reqHeaderArr[i + 1] === '/hydrogen.html') {
+        process.stdout.write(data);
+          socket.write(`HTTP/1.1 200 OK
+                        Server: ${SERVER}
+                        Date: ${date}
+                        Content-Type: text/html; charset=utf-8
+                        Content-Length: ${hydrogen.length}
+                        Connection: keep-alive\n\n`);
+          socket.write(hydrogen);
+          return socket.end();
+      } else {
+         socket.write(`HTTP/1.1 404 OK
+                        Server: ${SERVER}
+                        Date: ${date}
+                        Content-Type: text/html; charset=utf-8
+                        Content-Length: ${four_O_Four.length}
+                        Connection: keep-alive\n\n`);
+        socket.write(four_O_Four);
+        return socket.end();
       }
     }
 
   });
-   
+
 });
+
+
+   
 
 
 
@@ -52,4 +81,13 @@ server.listen(PORT, () => {
 });
 
 
-// need to build http response message in string template(header, and body)
+
+
+// socket.write(`HTTP/1.1 404
+//                       Server: ${SERVER}
+//                       Date: ${date}
+//                       Content-Type: text/html; charset=utf-8
+//                       Content-Length: ${four_O_Four.length}
+//                       Connection: keep-alive\n\n`)
+//         socket.write(four_O_Four);
+//         socket.end();

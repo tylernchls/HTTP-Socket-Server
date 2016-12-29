@@ -1,3 +1,5 @@
+module.exports = `
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,3 +15,5 @@
   <p><a href="/">back</a></p>
 </body>
 </html>
+
+`;
