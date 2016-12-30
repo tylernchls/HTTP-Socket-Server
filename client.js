@@ -1,6 +1,6 @@
 /*
 This program resembles the cmd line 'curl'. Allow user to make HTTP requests
-to websites and pull data. Useful to test connections on your webpage.
+to websites and pull data. Useful to test connections on server/ website
 */
 
 
