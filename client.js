@@ -5,7 +5,7 @@ const EVENT_DATA = 'data';
 /*
 grabs what user enters in cmd line. hostId
 is first part of url ex. www.devleague.com/
-host_path = anything after the '/' ex. devleague/apply
+host_path = anything after the '/' ex. devleague.com/apply
 */
 const hostId = process.argv[2].split('/')[0];
 const host_path = process.argv[2].split('/')[1];
@@ -25,12 +25,14 @@ if(hostId === 'localhost') {
 
 const client = net.connect(port, hostId, () => {
   let date = new Date();
-  process.stdin.on(EVENT_DATA, () => {
-  client.write(`GET /host_path HTTP/1.1
+  let header = `GET /${host_path} HTTP/1.1
 Accept: text/html, charset=utf-8
-Host: localhost
+Host: ${hostId}
 Date: ${date}
-User-Agent: Tyler\r\n\r\n`);
+User-Agent: Tyler\r\n\r\n`
+  process.stdin.on(EVENT_DATA, () => {
+  client.write(header);
+  console.log(header);
 
   });
     console.log('connected to server');
