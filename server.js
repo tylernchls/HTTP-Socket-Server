@@ -72,7 +72,7 @@ let server = net.createServer((socket) => {
           socket.write(styles);
           return socket.end();
       } else {
-         socket.write(`HTTP/1.1 404 OK
+         socket.write(`HTTP/1.1 404
                         Server: ${SERVER}
                         Date: ${date}
                         Content-Type: text/html; charset=utf-8
