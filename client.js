@@ -33,6 +33,7 @@ Date: ${date}
 User-Agent: Tyler\r\n\r\n`);
 
   });
+    console.log('connected to server');
 });
 
 
@@ -41,3 +42,6 @@ client.on(EVENT_DATA, (data) => {
   process.stdout.write(data.toString());
 
 });
+
+
+
