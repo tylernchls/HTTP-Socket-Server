@@ -14,7 +14,7 @@ const styles = require('./html_files/styles.js');
 /*
 This server works with client.js only when connected on port 8080. Client
 sends request header and will check for that data, grab, and sent it back.
-Used postman to simulate http requests.
+
 
 */
 
