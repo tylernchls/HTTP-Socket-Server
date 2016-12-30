@@ -2,10 +2,15 @@ const net = require('net');
 let port;
 const EVENT_DATA = 'data';
 
+/*
+grabs what user enters in cmd line. hostId
+is first part of url ex. www.devleague.com/
+host_path = anything after the '/' ex. devleague/apply
+*/
 const hostId = process.argv[2].split('/')[0];
-
-
 const host_path = process.argv[2].split('/')[1];
+
+
 
 
 /*
