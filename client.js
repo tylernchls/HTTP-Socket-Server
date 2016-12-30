@@ -1,3 +1,9 @@
+/*
+This program resembles the cmd line 'curl'. Allow user to make HTTP requests
+to websites and pull data. Useful to test connections on your webpage.
+*/
+
+
 const net = require('net');
 let port;
 const EVENT_DATA = 'data';
@@ -25,14 +31,14 @@ if(hostId === 'localhost') {
 
 const client = net.connect(port, hostId, () => {
   let date = new Date();
-  let header = `GET /${host_path} HTTP/1.1
+  let reqheader = `GET /${host_path} HTTP/1.1
 Accept: text/html, charset=utf-8
 Host: ${hostId}
 Date: ${date}
 User-Agent: Tyler\r\n\r\n`
   process.stdin.on(EVENT_DATA, () => {
-  client.write(header);
-  console.log(header);
+  client.write(reqheader);
+  console.log(reqheader);
 
   });
     console.log('connected to server');
